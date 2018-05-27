@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net461</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="Program.fs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="FSharp.Charting" Version="0.91.1" />
+    <PackageReference Include="FSharp.Data" Version="3.0.0-beta" />
+  </ItemGroup>
+
+</Project>
