@@ -2,7 +2,6 @@
 open FSharp.Data
 open System.Text.RegularExpressions
 open System.Globalization
-open FSharp.Charting
 
 //Exemplo 1: Imprime os primeiros links da busca de 'dilbert comic strip' no Pinterest
 type DilbertSearch = HtmlProvider<"https://www.pinterest.pt/search/pins/?q=dilbert%20comic%20strip">
@@ -42,8 +41,3 @@ let filmsByRevenue = StarWarsWiki().Tables.``Box office performance``.Rows
                         |> Seq.toArray
 filmsByRevenue 
     |> Seq.iter (fun elem -> elem ||> printf "%s - %f Billions \n")
-
-Chart.Column filmsByRevenue 
-    |> Chart.WithYAxis(Title = "Billions")
-    |> Chart.WithXAxis(Title = "Films")
-    |> Chart.Show
