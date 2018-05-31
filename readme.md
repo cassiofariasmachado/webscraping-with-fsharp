@@ -2,36 +2,40 @@
 
 ## Introdução
 
-Sempre fiquei muito curioso quando escutava falar sobre linguagens funcionais e nas vantagens que elas trazem ao desenvolvimento. A promessa de dar adeus ao "null" e outros erros de runtime que tanto nos incomodam, faz brilhar meus olhos até hoje. Então, como desenvolvedor .NET, decidi começar no mundo funcional através do F#.
+Sempre fiquei muito curioso quando ouvia sobre as linguagens funcionais e as vantagens que elas trazem ao desenvolvimento. A promessa de dar adeus ao "null" e outros erros de runtime que tanto nos incomodam, faz brilhar meus olhos até hoje. Então, como desenvolvedor .NET, decidi começar no mundo funcional através do F#.
 
-Já fazia um tempo que gostaria de estudar melhor a linguagem e escrever um artigo sobre, assim resolvi começar pela prática estudando como utiliza-la para aplicar Web Scraping. Para quem desconhece o termo, Web Scraping nada mais é do que um método de coletar dados de página web progamaticamente e F# é uma ferramenta muito poderosa para isso.
+Já fazia um tempo que gostaria de estudar melhor a linguagem e escrever um artigo sobre, assim resolvi começar pela prática estudando como utiliza-la para aplicar _Web Scraping_. Para quem desconhece o termo, [Web Scraping](https://en.wikipedia.org/wiki/Web_scraping) nada mais é do que um método de coletar dados de páginas web progamaticamente e F# é uma ferramenta muito poderosa para isso.
 
 ## Formas de usar
 
-Existem basicamente 3 formas de se aplicar Web Scraping com F#:
+Existem basicamente 3 formas de se aplicar _Web Scraping_ com F#:
 
 1. Utilizar alguma biblioteca feita para isso em C#
 2. Utilizar um wrapper de Selenium para F#
 3. Ou então, utilizar a biblioteca `FSharp.Data`
 
-Essa última é a que irei abordar nessa artigo, trata-se de uma biblioteca que permite trabalhar com os formatos CSV, XML, JSON e até, não se surpreenda, HTML mais facilmente.
+Essa última é a que irei abordar nessa artigo, trata-se de uma biblioteca que permite trabalhar com os formatos CSV, XML, JSON e até, não se surpreenda, HTML mais facilmente. 
 
-## Exemplos
+Ela também fornece helpers para realizar requisições HTTP, conversão para os tipos já mencionados e acesso ao [WorldBank](http://www.worldbank.org/), mas isso não será abordado nesse artigo.
 
-Através do `HtmlProvider` é possível definir um tipo para a página que você deseja fazer o scraping. Ele espera receber um html de exemplo que pode ser um arquivo local ou uma url, e vai servir de base para a criação do tipo F#, dessa forma:
+## HtmlProvider
+
+Através do `HtmlProvider` é possível definir um tipo para a página que você deseja fazer o _scraping_. Ele espera receber um HTML de exemplo que pode ser um arquivo ou uma url, e vai servir de base para a criação do tipo F#, dessa forma:
 
 ``` f#
 type DilbertSearch = HtmlProvider<"https://www.pinterest.pt/search/pins/?q=dilbert%20comic%20strip">
 ```
 
+## Exemplos
+
 Assim é possível, por exemplo, pegar as primeiras imagens disponíveis da pesquisa por "dilbert comic strip" no `Pinterest`:
 
 ``` f#
-DilbertSearch().Html.CssSelect("._0._25._2s img")
+DilbertSearch().Html.CssSelect(".mainContainer img")
     |> List.iter (fun n -> printfn "%s" (n.AttributeValue("src")))
 ```
 
-Os tipos gerados a partir do `HtmlProvider` fornecem facilitadores para tabelas e listas encontradas na página html, assim é possível, por exemplo, pegar a lista de personagens da tirinha do Hagar em sua página no `Wikipedia`, assim:
+Os tipos gerados a partir do `HtmlProvider` indentificam automaticamente as tabelas e listas (literalmente `<table>`, `<ul>` ou `<ol>`) encontradas na página HTML, assim é possível, por exemplo, pegar a lista de personagens da tirinha do Hagar em sua página no `Wikipedia`:
 
 ``` f#
 type HagarWiki = HtmlProvider<"https://en.wikipedia.org/wiki/H%C3%A4gar_the_Horrible">
@@ -42,11 +46,13 @@ HagarWiki().Lists.``Cast of characters``.Values
     |> List.iter (printf "%s\n")
 ```
 
-E o melhor é que as tabelas e listas identificadas ficam disponíveis em tempo de desenvolvimento através do IntelliSense do Visual Studio ou Visual Studio Code.
+O nome dado a lista ou tabela identificada é retirado dos atributos/tags HTML `id`, `title`, `name`, `summary` ou `caption`, se nenhum deles é encontrado então o nome dado será `TableXX` ou `ListXX`, em que o `XX` é um número sequencial de onde o elemento foi encontrado na página.
+
+Mas o melhor disso é que essas tabelas e listas ficam disponíveis em tempo de desenvolvimento através do IntelliSense do Visual Studio ou Visual Studio Code:
 
 ![Exemplo IntelliSense com personagens do Hagar](https://user-images.githubusercontent.com/16840260/40587521-62d056f2-61a6-11e8-990b-53301248b71f.gif "Exemplo IntelliSense com personagens do Hagar")
 
-Nesse outro exemplo, é possível buscar os filme da franquia `Star Wars` e a sua arrecadação em dólares:
+Nesse outro exemplo, é possível buscar os filmes da franquia `Star Wars` e a sua arrecadação em dólares:
 
 ``` f#
 type StarWarsWiki = HtmlProvider<"https://en.wikipedia.org/wiki/List_of_Star_Wars_films_and_television_series">
@@ -58,7 +64,7 @@ let filmsByRevenue = StarWarsWiki().Tables.``Box office performance``.Rows
                         |> Seq.toArray
 ```
 
-E então, é possível plotar um gráfico utilizando a biblioteca `FSharp.Charting`, asssim:
+E então, é possível também plotar um gráfico utilizando a biblioteca `FSharp.Charting`, assim:
 
 ``` f#
 Chart.Column filmsByRevenue
@@ -69,9 +75,25 @@ Chart.Column filmsByRevenue
 
 ![Gráfico da arrecadação dos filmes da franquia Star Wars](https://user-images.githubusercontent.com/16840260/40587523-6414d826-61a6-11e8-940e-d1f60f38c1f9.PNG "Exemplo de arrecadações")
 
+## Repositório com os exemplos
+
+Os exemplos utilizados no artigo estão disponíveis nesse [repositório do GitHub](https://github.com/cassiofariasmachado/webscraping-with-fsharp).
+
+Nele existem dois projetos de exemplo um utilizando [.NET Framework](https://github.com/cassiofariasmachado/webscraping-with-fsharp/tree/master/src/samples) e outro utilizando o [.NET Core](https://github.com/cassiofariasmachado/webscraping-with-fsharp/tree/master/src/samples-core). As únicas diferenças entre eles, além da versão do framework, é que nesse último: 
+
+* A biblioteca `FSharp.Data` só é compatível com o .NET Core, se utilizada a partir da sua versão `3.0.0-beta` que está em beta
+* E a biblioteca `FSharp.Charting` foi removida, pois ela não suporta .NET Core
+
+## Conclusão e próximos passos
+
+Assim, a biblioteca `Fsharp.Data` torna o F# uma ferramenta muito poderosa para fazer _scraping_ de páginas web. Entretando, nem tudo são flores e se a página possui conteúdo dinâmico (utilização de javascript para renderização), existem dificuldades de se utilizar a biblioteca, mas que podem ser contornadas utilizando a segunda opção apresentada no início do artigo (algum wrapper de Selenium para F#) em conjunto. 
+
+Enfim, minha primeira impressão com a linguagem e com o paradigma foi muito positiva, trata-se de uma forma diferente de desenvolvimento que torna teu código muito mais claro, mas que necessita dedicação teorica também, pois exige uma mudança de _mindset_ e esse deve ser um dos meu proximos passos para continuar estudando.
+
 ## Referências
 
-Seguem alguns links de referência:
+Seguem algumas referências utilizadas:
 
-* [Why F# is the best langauge for Web Scraping](https://biarity.gitlab.io/2016/11/23/why-f-is-the-best-langauge-for-web-scraping/)
+* [FSharp Official Website](https://fsharp.org/)
 * [FSharp.Data](http://fsharp.github.io/FSharp.Data/index.html)
+* [Why F# is the best langauge for Web Scraping](https://biarity.gitlab.io/2016/11/23/why-f-is-the-best-langauge-for-web-scraping/)
