@@ -31,6 +31,10 @@ Assim é possível, por exemplo, pegar as primeiras imagens disponíveis da pesq
 ``` f#
 DilbertSearch().Html.CssSelect(".mainContainer img")
     |> List.iter (fun n -> printfn "%s" (n.AttributeValue("src")))
+
+// → https://i.pinimg.com/736x/90/38/bb/9038bbcabd5b31d6faa6705230df3a78--peanuts-comics-peanuts-gang.jpg
+// → https://i.pinimg.com/736x/b4/f5/ba/b4f5bac902a421a8b2eb00f232a227e4--human-resources-online-comics.jpg
+// ...
 ```
 
 Os tipos gerados a partir do `HtmlProvider` indentificam automaticamente as tabelas e listas (literalmente `<table>`, `<ul>` ou `<ol>`) encontradas na página HTML, assim é possível, por exemplo, pegar a lista de personagens da tirinha do Hagar em sua página no `Wikipedia`:
@@ -42,6 +46,10 @@ HagarWiki().Lists.``Cast of characters``.Values
     |> List.ofArray
     |> List.map getCharacterName
     |> List.iter (printf "%s\n")
+
+// → Hägar the Horrible
+// → Helga
+// ...
 ```
 
 O nome dado a lista ou tabela identificada é retirado dos atributos/tags HTML `id`, `title`, `name`, `summary` ou `caption`, se nenhum deles é encontrado então o nome dado será `TableXX` ou `ListXX`, em que o `XX` é um número sequencial de onde o elemento foi encontrado na página.
@@ -60,6 +68,13 @@ let filmsByRevenue = StarWarsWiki().Tables.``Box office performance``.Rows
                         |> Seq.sortBy (fun x -> convertReleaseDate x.``Release date``)
                         |> Seq.map (fun r -> r.Film, convertRevenue r.``Box office revenue - Worldwide``)
                         |> Seq.toArray
+
+filmsByRevenue 
+    |> Seq.iter (fun elem -> elem ||> printf "%s - %f Billions \n")
+
+// → Star Wars - 0.775398 Billions 
+// → The Empire Strikes Back - 0.547969 Billions 
+// ...
 ```
 
 E então, é possível também plotar um gráfico utilizando a biblioteca `FSharp.Charting`, assim:

@@ -7,10 +7,16 @@ open System.Globalization
 //Exemplo 1: Imprime os primeiros links da busca de 'dilbert comic strip' no Pinterest
 type DilbertSearch = HtmlProvider<"https://www.pinterest.pt/search/pins/?q=dilbert%20comic%20strip">
 
-let html = DilbertSearch().Html
+let formatUrl (url:string) = Regex(" (\dx)").Replace(url, String.Empty)
+                             |> fun url -> url.Trim()
+
+let getUrl (url:string) = url.Split ','
+                          |> Seq.map formatUrl
+                          |> Seq.last
 
 DilbertSearch().Html.CssSelect(".mainContainer img")
-    |> List.iter (fun n -> printfn "%s" (n.AttributeValue("src")))
+    |> List.map (fun d -> getUrl(d.AttributeValue("srcset")))
+    |> List.iter (printfn "%s")
 
 //Exemplo 2: Imprime os personagens de Hagar the horrible
 type HagarWiki = HtmlProvider<"https://en.wikipedia.org/wiki/H%C3%A4gar_the_Horrible">
