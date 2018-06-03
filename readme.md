@@ -26,8 +26,6 @@ Através do `HtmlProvider` é possível definir um tipo para a página que você
 type DilbertSearch = HtmlProvider<"https://www.pinterest.pt/search/pins/?q=dilbert%20comic%20strip">
 ```
 
-## Exemplos
-
 Assim é possível, por exemplo, pegar as primeiras imagens disponíveis da pesquisa por "dilbert comic strip" no `Pinterest`:
 
 ``` f#
@@ -84,11 +82,11 @@ Nele existem dois projetos de exemplo um utilizando [.NET Framework](https://git
 * A biblioteca `FSharp.Data` só é compatível com o .NET Core, se utilizada a partir da sua versão `3.0.0-beta` que está em beta
 * E a biblioteca `FSharp.Charting` foi removida, pois ela não suporta .NET Core
 
-## Conclusão e próximos passos
+## Conclusão
 
-Assim, a biblioteca `Fsharp.Data` torna o F# uma ferramenta muito poderosa para fazer _scraping_ de páginas web. Entretando, nem tudo são flores e se a página possui conteúdo dinâmico (utilização de javascript para renderização), existem dificuldades de se utilizar a biblioteca, mas que podem ser contornadas utilizando a segunda opção apresentada no início do artigo (algum wrapper de Selenium para F#) em conjunto. 
+Assim, a biblioteca `Fsharp.Data` torna o F# uma ferramenta muito poderosa para fazer _scraping_ de páginas web. Entretando, nem tudo são flores e se a página possui conteúdo dinâmico (utilização de javascript para renderização), existem dificuldades de se utilizar a biblioteca, mas que podem ser contornadas utilizando a segunda opção apresentada no início do artigo, um wrapper de Selenium para F#, em conjunto. 
 
-Enfim, minha primeira impressão com a linguagem e com o paradigma foi muito positiva, trata-se de uma forma diferente de desenvolvimento que torna teu código muito mais claro, mas que necessita dedicação teorica também, pois exige uma mudança de _mindset_ e esse deve ser um dos meu proximos passos para continuar estudando.
+Enfim, a primeira impressão com a linguagem e com o paradigma foi muito positiva, trata-se de uma forma diferente de desenvolvimento que torna o código muito mais claro, mas que necessita estudo teorico bem forte, pois exige uma mudança de _mindset_ para quem esta acostumado com o mundo da orientação a objetos. Como próximo passo, devo continuar me aprofundando na linguagem pra quem sabe trazer mais algum artigo sobre o assunto.
 
 ## Referências
 
