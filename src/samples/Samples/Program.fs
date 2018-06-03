@@ -9,13 +9,13 @@ type DilbertSearch = HtmlProvider<"https://www.pinterest.pt/search/pins/?q=dilbe
 
 let formatUrl (url:string) = Regex(" (\dx)").Replace(url, String.Empty)
                              |> fun url -> url.Trim()
-
-let getUrl (url:string) = url.Split ','
-                          |> Seq.map formatUrl
-                          |> Seq.last
+                             
+let getUrlOfLargestImage (url:string) = url.Split ','
+                                        |> Seq.map formatUrl
+                                        |> Seq.last
 
 DilbertSearch().Html.CssSelect(".mainContainer img")
-    |> List.map (fun d -> getUrl(d.AttributeValue("srcset")))
+    |> List.map (fun d -> getUrlOfLargestImage(d.AttributeValue("srcset")))
     |> List.iter (printfn "%s")
 
 //Exemplo 2: Imprime os personagens de Hagar the horrible

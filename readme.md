@@ -30,7 +30,7 @@ Assim é possível, por exemplo, pegar as primeiras imagens disponíveis da pesq
 
 ``` f#
 DilbertSearch().Html.CssSelect(".mainContainer img")
-    |> List.map (fun d -> getUrl(d.AttributeValue("srcset")))
+    |> List.map (fun d -> getUrlOfLargestImage(d.AttributeValue("srcset")))
     |> List.iter (printfn "%s")
 
 // → https://i.pinimg.com/736x/90/38/bb/9038bbcabd5b31d6faa6705230df3a78--peanuts-comics-peanuts-gang.jpg
