@@ -2,9 +2,9 @@
 
 ## Introdução
 
-Sempre fiquei muito curioso quando ouvia sobre as linguagens funcionais e as vantagens que elas trazem ao desenvolvimento. A promessa de dar adeus ao "null" e outros erros de runtime que tanto nos incomodam, faz brilhar meus olhos até hoje. Então, como desenvolvedor .NET, decidi começar no mundo funcional através do F#.
+Sempre fiquei muito curioso quando ouvia sobre as linguagens funcionais e as vantagens que elas trazem ao desenvolvimento. A promessa de dar adeus ao `null` e outros erros de runtime que tanto nos incomodam, faz brilhar meus olhos até hoje. Então, como desenvolvedor .NET, decidi começar no mundo funcional através do F#.
 
-Já fazia um tempo que gostaria de estudar melhor a linguagem e escrever um artigo sobre, assim resolvi começar pela prática estudando como utiliza-la para aplicar _Web Scraping_. Para quem desconhece o termo, [Web Scraping](https://en.wikipedia.org/wiki/Web_scraping) nada mais é do que um método de coletar dados de páginas web progamaticamente e F# é uma ferramenta muito poderosa para isso.
+Já fazia um tempo que gostaria de estudar melhor a linguagem e escrever um artigo sobre, assim resolvi começar pela prática estudando como utiliza-lá para aplicar _Web Scraping_. Para quem desconhece o termo, [Web Scraping](https://en.wikipedia.org/wiki/Web_scraping) nada mais é do que um método de coletar dados de páginas web progamaticamente e F# é uma ferramenta muito poderosa para isso.
 
 ## Formas de usar
 
@@ -14,13 +14,13 @@ Existem basicamente 3 formas de se aplicar _Web Scraping_ com F#:
 2. Utilizar um wrapper de Selenium para F#
 3. Ou então, utilizar a biblioteca `FSharp.Data`
 
-Essa última é a que irei abordar nessa artigo, trata-se de uma biblioteca que permite trabalhar com os formatos CSV, XML, JSON e até, não se surpreenda, HTML mais facilmente. 
+Essa última é a que irei abordar nessa artigo, trata-se de uma biblioteca que permite trabalhar mais facilmente com os formatos CSV, XML, JSON e até, não se surpreenda, HTML.
 
 Ela também fornece helpers para realizar requisições HTTP, conversão para os tipos já mencionados e acesso ao [WorldBank](http://www.worldbank.org/), mas isso não será abordado nesse artigo.
 
 ## HtmlProvider
 
-Através do `HtmlProvider` é possível definir um tipo para a página que você deseja fazer o _scraping_. Ele espera receber um HTML de exemplo que pode ser um arquivo ou uma url, e vai servir de base para a criação do tipo F#, dessa forma:
+Através do `HtmlProvider` é possível definir um tipo para a página que você deseja fazer o _scraping_. Ele espera receber um HTML de exemplo que pode ser um arquivo ou uma URL, e vai servir de base para a criação do tipo F#, dessa forma:
 
 ``` f#
 type DilbertSearch = HtmlProvider<"https://www.pinterest.pt/search/pins/?q=dilbert%20comic%20strip">
@@ -70,11 +70,11 @@ let filmsByRevenue = StarWarsWiki().Tables.``Box office performance``.Rows
                         |> Seq.map (fun r -> r.Film, convertRevenue r.``Box office revenue - Worldwide``)
                         |> Seq.toArray
 
-filmsByRevenue 
+filmsByRevenue
     |> Seq.iter (fun elem -> elem ||> printf "%s - %f Billions \n")
 
-// → Star Wars - 0.775398 Billions 
-// → The Empire Strikes Back - 0.547969 Billions 
+// → Star Wars - 0.775398 Billions
+// → The Empire Strikes Back - 0.547969 Billions
 // ...
 ```
 
@@ -93,16 +93,16 @@ Chart.Column filmsByRevenue
 
 Os exemplos utilizados no artigo estão disponíveis nesse [repositório do GitHub](https://github.com/cassiofariasmachado/webscraping-with-fsharp).
 
-Nele existem dois projetos de exemplo um utilizando [.NET Framework](https://github.com/cassiofariasmachado/webscraping-with-fsharp/tree/master/src/samples) e outro utilizando o [.NET Core](https://github.com/cassiofariasmachado/webscraping-with-fsharp/tree/master/src/samples-core). As únicas diferenças entre eles, além da versão do framework, é que nesse último: 
+Nele existem dois projetos de exemplo um utilizando [.NET Framework](https://github.com/cassiofariasmachado/webscraping-with-fsharp/tree/master/src/samples) e outro utilizando o [.NET Core](https://github.com/cassiofariasmachado/webscraping-with-fsharp/tree/master/src/samples-core). As únicas diferenças entre eles, além da versão do framework, é que nesse último:
 
 * A biblioteca `FSharp.Data` só é compatível com o .NET Core, se utilizada a partir da sua versão `3.0.0-beta` que está em beta
-* E a biblioteca `FSharp.Charting` foi removida, pois ela não suporta .NET Core
+* E a biblioteca `FSharp.Charting` foi removida, pois tem dependência do framework
 
 ## Conclusão
 
-Assim, a biblioteca `Fsharp.Data` torna o F# uma ferramenta muito poderosa para fazer _scraping_ de páginas web. Entretando, nem tudo são flores e se a página possui conteúdo dinâmico (utilização de javascript para renderização), existem dificuldades de se utilizar a biblioteca, mas que podem ser contornadas utilizando a segunda opção apresentada no início do artigo, um wrapper de Selenium para F#, em conjunto. 
+Assim, a biblioteca `Fsharp.Data` torna o F# uma ferramenta muito poderosa para fazer _scraping_ de páginas web. Entretando, nem tudo são flores e se a página possui conteúdo muito dinâmico (utilização de javascript para renderização), existem dificuldades de se utilizar a biblioteca, mas que podem ser contornadas utilizando-a em conjunto da segunda opção apresentada no início do artigo, um wrapper de Selenium para F#.
 
-Enfim, a primeira impressão com a linguagem e com o paradigma foi muito positiva, trata-se de uma forma diferente de desenvolvimento que torna o código muito mais claro, mas que necessita estudo teorico bem forte, pois exige uma mudança de _mindset_ para quem esta acostumado com o mundo da orientação a objetos. Como próximo passo, devo continuar me aprofundando na linguagem pra quem sabe trazer mais algum artigo sobre o assunto.
+Enfim, a primeira impressão com a linguagem e com o paradigma foi muito positiva, trata-se de uma forma diferente de desenvolvimento que torna o código muito mais claro, mas que necessita de certo aprofundamento teorico, pois exige uma mudança de _mindset_ para quem esta acostumado com o mundo da orientação a objetos. Como próximo passo, devo continuar me aprofundando na linguagem pra quem sabe trazer mais algum artigo sobre o assunto.
 
 ## Referências
 
