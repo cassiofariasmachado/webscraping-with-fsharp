@@ -4,7 +4,7 @@
 
 Sempre fiquei muito curioso quando ouvia sobre as linguagens funcionais e as vantagens que elas trazem ao desenvolvimento. A promessa de dar adeus ao `null` e outros erros de runtime que tanto nos incomodam, faz brilhar meus olhos até hoje. Então, como desenvolvedor .NET, decidi começar no mundo funcional através do F#.
 
-Já fazia um tempo que gostaria de estudar melhor a linguagem e escrever um artigo sobre, assim resolvi começar pela prática estudando como utiliza-lá para aplicar _Web Scraping_. Para quem desconhece o termo, [Web Scraping](https://en.wikipedia.org/wiki/Web_scraping) nada mais é do que um método de coletar dados de páginas web progamaticamente e F# é uma ferramenta muito poderosa para isso.
+Já fazia um tempo que gostaria de estudar melhor a linguagem e escrever um artigo sobre, assim resolvi começar pela prática estudando como utiliza-lá para aplicar _Web Scraping_. Para quem desconhece o termo, [Web Scraping](https://en.wikipedia.org/wiki/Web_scraping) nada mais é do que um método de coletar dados de páginas web e F# é uma ferramenta muito poderosa para isso.
 
 ## Formas de usar
 
@@ -93,7 +93,7 @@ Chart.Column filmsByRevenue
 
 Os exemplos utilizados no artigo estão disponíveis nesse [repositório do GitHub](https://github.com/cassiofariasmachado/webscraping-with-fsharp).
 
-Nele existem dois projetos de exemplo um utilizando [.NET Framework](https://github.com/cassiofariasmachado/webscraping-with-fsharp/tree/master/src/samples) e outro utilizando o [.NET Core](https://github.com/cassiofariasmachado/webscraping-with-fsharp/tree/master/src/samples-core). As únicas diferenças entre eles, além da versão do framework, é que nesse último:
+Nele existem dois projetos de exemplo um utilizando [.NET Framework](https://github.com/cassiofariasmachado/webscraping-with-fsharp/tree/master/src/samples) e outro utilizando o [.NET Core](https://github.com/cassiofariasmachado/webscraping-with-fsharp/tree/master/src/samples-core). As únicas diferenças entre eles, além da versão do .NET, é que nesse último:
 
 * A biblioteca `FSharp.Data` só é compatível com o .NET Core, se utilizada a partir da sua versão `3.0.0-beta` que está em beta
 * E a biblioteca `FSharp.Charting` foi removida, pois tem dependência do framework
@@ -102,7 +102,7 @@ Nele existem dois projetos de exemplo um utilizando [.NET Framework](https://git
 
 Assim, a biblioteca `Fsharp.Data` torna o F# uma ferramenta muito poderosa para fazer _scraping_ de páginas web. Entretando, nem tudo são flores e se a página possui conteúdo muito dinâmico (utilização de javascript para renderização), existem dificuldades de se utilizar a biblioteca, mas que podem ser contornadas utilizando-a em conjunto da segunda opção apresentada no início do artigo, um wrapper de Selenium para F#.
 
-Enfim, a primeira impressão com a linguagem e com o paradigma foi muito positiva, trata-se de uma forma diferente de desenvolvimento que torna o código muito mais claro, mas que necessita de certo aprofundamento teorico, pois exige uma mudança de _mindset_ para quem esta acostumado com o mundo da orientação a objetos. Como próximo passo, devo continuar me aprofundando na linguagem pra quem sabe trazer mais algum artigo sobre o assunto.
+Enfim, a primeira impressão com a linguagem e com o paradigma foi muito positiva, trata-se de uma forma diferente de desenvolvimento que torna o código muito mais claro, mas que necessita de certo aprofundamento teorico, pois exige uma mudança de _mindset_ para quem esta acostumado com o mundo orientado a objetos. Como próximo passo, devo continuar me aprofundando na linguagem pra quem sabe trazer mais algum artigo sobre o assunto.
 
 ## Referências
 
